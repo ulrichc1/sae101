@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> ADAV </title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+	<link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+	<!-- Header de la page -->
+	<header>
+		<a href="#accueil" class="logo" id="logo">ADA<span>V</span></a>
+<script>
+  const logo = document.getElementById("logo");
+  logo.addEventListener("click", function() {
+    location.replace("/");
+  });
+</script>
+
+		<ul class="navlist">
+			<li><a href="#accueil" class="active">Accueil</a></li>
+			<li><a href="#analyse">Graphique &amp; Rapport</a></li>
+			<li><a href="#download">Télécharger</a></li>
+			
+		</ul>
+
+		<div class="bx bx-menu" id="menu-icon">
+			
+		</div>
+	</header>
+
+	<!--  Accueil -->
+	<section class="accueil" id="accueil">
+		<div class="presentation">
+      <div class="slideRight">
+			<div class="slide">
+				<span class="one">Réalisé par </span>
+				<span class="two">Ulrich COUDIN, Hugo MOLINIER, Noé LAMARQUE, Mélissa COQUERELLE</span>
+			</div>
+			<h1>Logiciel ADA<span>V</span></h1>
+			<h3>Analyse de Données de l'Air à <span>Vitry-sur-Seine</span></h3>
+    </div>
+    <div class="slideUp">
+            <p> Notre logiciel développé en Python permet d'analyser en temps réel, les données de la qualité de l'air et de la pollution à Vitry-sur-Seine. Il permet de visualiser à une date donnée, le graphique des données ainsi qu'un rapport plus complet permettant de prendre des décisions éclairées pour protéger votre santé et celle de la communauté Vitriote.</p>
+            <button id="descriptif" class="btn">Descriptif du projet</button>
+            <p><br> </p>
+			<div class="button">
+                <div id="searchData">
+                    <form action="/submit_form" method="GET">
+                      <label for="value">Sélectionnez une date:</label>
+                      <input type="date" id="value" name="value" min="2021-01-01" class="btn2" required>
+                      <input type="submit" class="btn" onclick="displayValue()" value="ANALYSER">  
+                    </form>
+              </div>
+			</div>
+   
+            <div class="useful">
+                <li><a href="https://files.data.gouv.fr/lcsqa/concentrations-de-polluants-atmospheriques-reglementes/temps-reel" target="_blank"> <img id="logo"  src="{{ url_for('static', filename='logo_rf.png') }}" alt="logo"/></a></li>
+                <li><a href="https://iut.u-pec.fr/" target="_blank"> <img id="logo"  src="{{ url_for('static', filename='logo_upec.png') }}" alt="logo"/></a></li>
+                <li><a href="https://data-airparif-asso.opendata.arcgis.com/" target="_blank"> <img id="logo"  src="{{ url_for('static', filename='logo_apf.png') }}" alt="logo"/></a></li>
+                <li class="vitry"><a href="https://www.vitry94.fr/" target="_blank"> <img id="logo"  src="{{ url_for('static', filename='logo_vitry.png') }}" alt="logo"/></a></li>
+		    </div>
+            </div>
+          </div>
+          <div id="modal0">
+            <div id="md" class="modal-content">
+              <div class="justifycenter">
+             <h2>Descriptif du projet</h2>
+              <p>Nous donnons la possibilité à la ville de Vitry-sur-Seine de pouvoir effectuer des mesures en temps réel et à un jour donnée sur la mesure de ses polluants atmosphériques précis : 
+              <br><ul> <li>- les gaz NO (monoxyde d’azote)</li><li>- les gaz NO2 (dioxyde d’azote)</li><li>- les gaz NOX (oxydes d’azote)</li><li>- les gaz O3 (ozone)</li> <li>- les aérosols PM10 (particules fines de diamètre inférieures à 10 micromètre)</li> <li>- PM2.5 (particules fines de diamètre inférieures à 2.5 micromètre)</li></ul>
+              <br> Ces données collectées par l'AASQA concernant la qualité de l'air sont gérées localement par l'association Airparif. 
+              <br>L'application a été développée dans le cadre de ce projet en langage de programmation Python. Nous avons également utilisé les langages HTML/CSS et JavaScript pour l’élaboration de l’interface Web.
+              <br>
+              <br> Afin de pouvoir utiliser le logiciel sur le site Web, il vous faut sélectionner une date à partir du calendrier ci-dessous et appuyer sur le bouton <span class="warning">Analyser</span> afin d'effectuer l'analyse.
+              <br><br> <span class="warning">NOTEZ QUE L'EXÉCUTION DU LOGICIEL PEUT-ÊTRE TRES LENT (allant de 30 secondes à 1 minute d'attente).</span><br>
+              <br>Enfin, la page rechargée, il vous faudra vous rendre en milieu de page pour sélectionner l'affichage de votre choix : 
+              <ul>
+                <li> - Visualiser le graphique de données sous forme d'image .png </li>
+                <li> - Visualiser le rapport complet de mesures des données sous forme de fichier .pdf</li>
+              </ul>
+              <br>Dans le rapport complet, vous trouverez le graphique de données, les mesures journalières ainsi que l'analyse statistique des mesures journalières (nombre de mesures, valeur maximale, valeur minimale, valeur moyenne, écart-type...)
+              <br> Vous pourrez également télécharger le graphique et le rapport respectivement au format .png et .pdf en bas de page.
+              <br> <br>Vous trouverez également des liens vers des sites redirigeant vers :
+              <ul> <li> - Le site de la base de données (.csv et .xml) des mesures de polluants atmosphériques en France.</li>
+                <li>-  Le site de l'IUT de Créteil-Vitry. </li>
+                <li> - Le site de Airparif, une association agréée de surveillance de la qualité de l'air.</li>
+                <li> - Le site de la ville de Vitry-sur-Seine.</li></ul><br>
+            </p>
+            </div>
+              <button id="close-button"> &times; Fermer </button>
+            </div>
+        </div>
+	</section>
+
+	<!-- Résultats -->
+	<section class="analyse" id="analyse">
+		<div class="date-text">
+            <h2>Analyse de données pour le <span class="dateChoisi"></span></h2>
+		</div>
+
+		<div class="analyse-content">
+			<div class="box" id="graphBox">
+				<div class="s-icons">
+					<i class='bx bx-stats' ></i>
+				</div>
+				<h3>Graphique</h3>
+				<p>Graphique linéaire représentant l'analyse de données de l'air pour le <span class="dateChoisi white"> </span></p>
+				<button class="open-modal"> Ouvrir </button>
+			</div>
+
+            <div id="modal1">
+                <div id="md" class="modal-content">
+                 <div id="showPlot"><img src="{{ url_for('static', filename='data_image.png') }}" alt="graphique"/></div>
+                  <button id="close-button2"> &times; Fermer </button>
+                </div>
+              </div>
+
+
+			<div class="box" id="reportBox">
+				<div class="s-icons">
+					<i class='bx bx-file' ></i>
+				</div>
+				<h3>Rapport détaillé</h3>
+				<p>Rapport en Dataframe représentant l'analyse de données de l'air pour le <span class="dateChoisi white"> </span></p>
+                <button class="open-modal"> Ouvrir </button>
+			</div>
+
+            <div id="modal2">
+                <div id="md" class="modal-content">
+                  <div id="showPlot">
+                    <object data="{{ url_for('static', filename='data-report.pdf')}}" type="application/pdf">
+                      <p>Votre navigateur ne supporte pas les fichiers .pdf <a href={{ url_for('static', filename='data-report.pdf') }}>Téléchargez le rapport PDF.</a></p>
+                    </object>
+                    
+                  <button id="close-button3"> &times; Fermer </button>
+                </div>
+              </div>
+		</div>
+        <script>
+          //JS pour afficher des modals (blocs survolant la page) et pouvoir les fermer
+            modalBtn = document.getElementById("descriptif");
+            graphBtn = document.getElementById("graphBox");
+            reportBtn = document.getElementById("reportBox");
+            modal0 = document.getElementById("modal0");
+            modal1 = document.getElementById("modal1");
+            modal2 = document.getElementById("modal2");
+            closeButton = document.getElementById("close-button");
+            closeButton2 = document.getElementById("close-button2");
+            closeButton3 = document.getElementById("close-button3");
+            closeButton.addEventListener("click",function(event){
+              modal0.style.display = modal0.style.display === 'none' ? '': 'none';
+            })
+            closeButton2.addEventListener("click",function(event){
+                modal1.style.display = modal1.style.display === 'none' ? '': 'none';
+            })
+            closeButton3.addEventListener("click",function(event){
+                modal2.style.display = modal2.style.display === 'none' ? '': 'none';
+            })
+            modalBtn.addEventListener("click", function(event) {
+                modal0.style.display = modal0.style.display === 'block' ? '' : 'block';
+              });
+            graphBtn.addEventListener("click", function(event) {
+              modal1.style.display = modal1.style.display === 'block' ? '' : 'block';
+            });
+            reportBtn.addEventListener("click", function(event) {
+              modal2.style.display = modal2.style.display === 'block' ? '' : 'block';
+            });
+
+          </script>
+	</section>
+	
+    <section class="download" id="download">
+        <div class="download-container">
+            <a href={{ url_for('static', filename='data_image.png') }} class="open-modal" download>Télécharger le graphique (au format .png)</a>
+            <a href={{ url_for('static', filename='data-report.pdf') }} class="open-modal" download>Télécharger le rapport détaillé (au format .pdf)</a>
+          </div>
+    </section>
+    
+<script>
+  // JS pour afficher la valeur transmise par le formulaire dans des spans dédiées
+function displayValue() {
+  var value = document.getElementById("value").value;
+  sessionStorage.setItem("value", value);
+  var spans = document.getElementsByClassName("dateChoisi");
+  for (var i = 0; i < spans.length; i++) {
+      spans[i].innerHTML = value;
+      };
+    };
+
+    var contenu = sessionStorage.getItem("value");
+    var spans = document.getElementsByClassName("dateChoisi");
+    for (var i = 0; i < spans.length; i++) {
+              spans[i].innerHTML = contenu;
+    };
+</script>
+	<!-- Footer de la page -->
+	<section class="footer">
+		<div class="last-text">
+			<p>Copyright © 2023 by Ulrich COUDIN | Tous droits réservées.</p>
+		</div>
+
+		<div class="top">
+			<a href="#accueil"><i class='bx bx-up-arrow-alt' ></i></a>
+		</div>
+	</section>
+
+  <script>
+    //JS pour revenir au header 
+const header = document.querySelector("header");
+window.addEventListener ("scroll", function() {
+header.classList.toggle ("sticky", window.scrollY > 100);
+});
+
+let menu = document.querySelector('#menu-icon');
+let navlist = document.querySelector('.navlist');
+
+menu.onclick = () => {
+menu.classList.toggle('bx-x');
+navlist.classList.toggle('open');
+};
+
+window.onscroll = () => {
+menu.classList.remove('bx-x');
+navlist.classList.remove('open');
+};
+  </script>
+	
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
